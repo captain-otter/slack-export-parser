@@ -1,0 +1,170 @@
+[gd_scene load_steps=5 format=3 uid="uid://bl4bhpei4yt1m"]
+
+[ext_resource type="Script" path="res://scripts/App.cs" id="1_psyry"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r6nr5"]
+bg_color = Color(0.1558, 0.41, 0.210877, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_enc15"]
+bg_color = Color(0.228356, 0.59162, 0.307555, 1)
+
+[sub_resource type="Theme" id="Theme_bby3u"]
+Button/styles/hover = SubResource("StyleBoxFlat_r6nr5")
+Button/styles/normal = SubResource("StyleBoxFlat_enc15")
+
+[node name="App" type="Control" node_paths=PackedStringArray("selectFileButton", "fileSelectDialog", "progressLabel", "progressBar", "outputLabel", "skippedOutputLabel", "delaySlider", "delayLabel")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_psyry")
+selectFileButton = NodePath("MarginContainer/Control/VBoxContainer/Button")
+fileSelectDialog = NodePath("MarginContainer/Control/Control/FileDialog")
+progressLabel = NodePath("MarginContainer/Control/VBoxContainer/HBoxContainer/Label")
+progressBar = NodePath("MarginContainer/Control/VBoxContainer/HBoxContainer/ProgressBar")
+outputLabel = NodePath("MarginContainer/Control/VBoxContainer/ColorRect/MarginContainer/RichTextLabel")
+skippedOutputLabel = NodePath("MarginContainer/Control/VBoxContainer/ColorRect2/MarginContainer/RichTextLabel")
+delaySlider = NodePath("MarginContainer/Control/VBoxContainer/DelayContainer/HSlider")
+delayLabel = NodePath("MarginContainer/Control/VBoxContainer/DelayContainer/Label")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="Control" type="Control" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="MarginContainer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/Control/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch_mode = 6
+
+[node name="FileDialog" type="FileDialog" parent="MarginContainer/Control/Control"]
+title = "Open a File"
+initial_position = 1
+size = Vector2i(324, 180)
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+show_hidden_files = true
+use_native_dialog = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DelayContainer" type="HBoxContainer" parent="MarginContainer/Control/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="Label" type="Label" parent="MarginContainer/Control/VBoxContainer/DelayContainer"]
+layout_mode = 2
+text = "Delay: 100 ms"
+
+[node name="HSlider" type="HSlider" parent="MarginContainer/Control/VBoxContainer/DelayContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 2000.0
+step = 100.0
+value = 100.0
+
+[node name="ColorRect" type="ColorRect" parent="MarginContainer/Control/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+color = Color(0, 0, 0, 0.2)
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Control/VBoxContainer/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/Control/VBoxContainer/ColorRect/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+focus_mode = 2
+theme_override_font_sizes/normal_font_size = 16
+text = "Output"
+scroll_following = true
+autowrap_mode = 0
+selection_enabled = true
+
+[node name="ColorRect2" type="ColorRect" parent="MarginContainer/Control/VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+color = Color(0, 0, 0, 0.2)
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Control/VBoxContainer/ColorRect2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/Control/VBoxContainer/ColorRect2/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+focus_mode = 2
+theme_override_font_sizes/normal_font_size = 16
+text = "Skipped"
+scroll_following = true
+autowrap_mode = 0
+selection_enabled = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/Control/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Control/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "0/??"
+
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/Control/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.0
+
+[node name="Button" type="Button" parent="MarginContainer/Control/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_bby3u")
+text = "Locate channels.json file"
